@@ -47,7 +47,7 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 lg:gap-8">
-            <Link href="/" className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition">
+            <Link href="/shop" className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition">
               COLLECTION
             </Link>
             <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">

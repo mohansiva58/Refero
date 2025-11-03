@@ -32,7 +32,7 @@ interface Product {
   reviews?: number
   sizeChart?: {
     headers: string[]
-    data: string[][]
+    rows: string[][]
   }
 }
 
@@ -63,13 +63,17 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
     async function fetchProduct() {
       try {
-        const res = await fetch(`/api/admin/products/${resolvedParams.id}`)
+        const res = await fetch(`/api/admin/products/${resolvedParams!.id}`)
         const data = await res.json()
         console.log("Product detail API response:", data)
         if (data.success && data.product) {
           setProduct(data.product)
           setSelectedColor(data.product.colors?.[0] || "")
-          setSelectedSize(data.product.sizes?.[0] || "")
+          // Set default size - use product sizes or default to 'M'
+          const defaultSize = data.product.sizes && data.product.sizes.length > 0 
+            ? data.product.sizes[0] 
+            : 'M'
+          setSelectedSize(defaultSize)
         } else {
           router.push("/shop")
         }
@@ -187,7 +191,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       )}
 
       {/* Size Chart Modal */}
-      {showSizeChart && product.sizeChart && (
+      {showSizeChart && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-4 md:p-6 flex justify-between items-center">
@@ -201,23 +205,67 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="bg-gray-100">
-                      {product.sizeChart.headers.map((header, i) => (
-                        <th key={i} className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">
-                          {header}
-                        </th>
-                      ))}
+                      {product.sizeChart?.headers ? (
+                        product.sizeChart.headers.map((header, i) => (
+                          <th key={i} className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">
+                            {header}
+                          </th>
+                        ))
+                      ) : (
+                        <>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">Size</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">Chest (inches)</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">Length (inches)</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-bold text-sm">Shoulder (inches)</th>
+                        </>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
-                    {product.sizeChart.data.map((row, i) => (
-                      <tr key={i} className="hover:bg-gray-50">
-                        {row.map((cell, j) => (
-                          <td key={j} className="border border-gray-300 px-4 py-3 text-sm">
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
+                    {product.sizeChart?.rows && product.sizeChart.rows.length > 0 ? (
+                      product.sizeChart.rows.map((row, i) => (
+                        <tr key={i} className="hover:bg-gray-50">
+                          {row.map((cell, j) => (
+                            <td key={j} className="border border-gray-300 px-4 py-3 text-sm">
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))
+                    ) : (
+                      <>
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 text-sm">S</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">36-38</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">27</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">17</td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 text-sm">M</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">38-40</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">28</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">18</td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 text-sm">L</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">40-42</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">29</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">19</td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 text-sm">XL</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">42-44</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">30</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">20</td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="border border-gray-300 px-4 py-3 text-sm">XXL</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">44-46</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">31</td>
+                          <td className="border border-gray-300 px-4 py-3 text-sm">21</td>
+                        </tr>
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -328,7 +376,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               {/* Size Selection */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <label className="text-sm md:text-base font-bold uppercase">Size Guide</label>
+                  <label className="text-sm md:text-base font-bold uppercase">Select Size</label>
                   <button 
                     onClick={() => setShowSizeChart(true)}
                     className="text-xs md:text-sm underline hover:no-underline text-black font-medium"
@@ -336,8 +384,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     SIZE GUIDE
                   </button>
                 </div>
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 gap-2">
-                  {product.sizes.map((size) => (
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
+                  {(product.sizes && product.sizes.length > 0 ? product.sizes : ['S', 'M', 'L', 'XL', 'XXL']).map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}

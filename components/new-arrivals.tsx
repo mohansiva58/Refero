@@ -7,6 +7,8 @@ interface Product {
   _id: string
   name: string
   price: number
+  mrp: number
+  discount: number
   images: string[]
   colors: string[]
 }
@@ -66,6 +68,8 @@ export default function NewArrivals() {
               id: product._id,
               name: product.name,
               price: product.price,
+              mrp: product.mrp,
+              discount: product.discount,
               image: product.images[0] || "/placeholder.jpg",
               colors: product.colors || [],
             }}

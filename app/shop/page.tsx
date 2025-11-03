@@ -194,6 +194,8 @@ export default function ShopPage() {
                         id: product._id,
                         name: product.name,
                         price: product.price,
+                        mrp: product.mrp,
+                        discount: product.discount,
                         image: product.images[0] || "/placeholder.jpg",
                         colors: product.colors,
                       }} 

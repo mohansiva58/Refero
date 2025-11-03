@@ -73,17 +73,20 @@ export default function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       <Link href={`/product/${product.id}`} className="hover:underline">
-        <h3 className="text-sm md:text-base font-bold mb-1 line-clamp-2">{product.name}</h3>
+        <h3 className="text-sm md:text-base font-bold mb-2 line-clamp-2">{product.name}</h3>
       </Link>
 
       <div className="mb-2 md:mb-3">
-        <div className="flex items-baseline gap-2">
-          <p className="font-bold text-base md:text-lg">₹{product.price.toLocaleString("en-IN")}</p>
+        <div className="flex items-center gap-2 flex-wrap">
           {product.mrp && (
             <>
-              <p className="text-xs md:text-sm text-gray-400 line-through">₹{product.mrp.toLocaleString("en-IN")}</p>
-              {product.discount && <p className="text-xs text-red-600 font-bold">{product.discount}%</p>}
+              <p className="text-xs text-gray-600">MRP</p>
+              <p className="text-sm md:text-base text-gray-400 line-through">₹{product.mrp.toLocaleString("en-IN")}</p>
             </>
+          )}
+          <p className="font-bold text-lg md:text-xl">₹{product.price.toLocaleString("en-IN")}</p>
+          {product.discount && (
+            <span className="text-xs md:text-sm text-red-600 font-bold">{product.discount}%</span>
           )}
         </div>
       </div>
