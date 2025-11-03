@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
@@ -13,7 +13,7 @@ import { processCODPayment, processOnlinePayment, validatePayment } from "@/lib/
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart()
-  const { user } = useAuth()
+  const { user, loading: authLoading, setShowLoginModal } = useAuth()
   const router = useRouter()
   const [paymentMethod, setPaymentMethod] = useState("cod")
   const [shippingAddress, setShippingAddress] = useState({
@@ -35,6 +35,25 @@ export default function CheckoutPage() {
   const codAdvanceAmount = Math.round(total * (codAdvancePercentage / 100))
   const totalWithTax = total + Math.round(total * 0.18)
 
+  // Check if user is logged in, if not show login modal
+  useEffect(() => {
+    if (!authLoading && !user) {
+      setShowLoginModal(true)
+    }
+  }, [authLoading, user, setShowLoginModal])
+
+  // Pre-fill user details if logged in
+  useEffect(() => {
+    if (user && !shippingAddress.email) {
+      setShippingAddress(prev => ({
+        ...prev,
+        name: user.displayName || "",
+        email: user.email || "",
+        phone: user.phoneNumber || "",
+      }))
+    }
+  }, [user])
+
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setShippingAddress((prev) => ({ ...prev, [name]: value }))
@@ -42,7 +61,7 @@ export default function CheckoutPage() {
 
   const handlePlaceOrder = async () => {
     if (!user) {
-      router.push("/login")
+      setShowLoginModal(true)
       return
     }
 
@@ -73,7 +92,7 @@ export default function CheckoutPage() {
           orderId,
           amount: chargeAmount,
           currency: "INR",
-          userEmail: user.email,
+          userEmail: user.email || "",
         })
       } else {
         paymentResponse = await processOnlinePayment({
@@ -81,7 +100,7 @@ export default function CheckoutPage() {
           orderId,
           amount: total,
           currency: "INR",
-          userEmail: user.email,
+          userEmail: user.email || "",
         })
       }
 

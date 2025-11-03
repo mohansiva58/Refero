@@ -15,9 +15,9 @@ export default function ProfilePage() {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState({
-    fullName: user?.name || "",
+    fullName: user?.displayName || "",
     email: user?.email || "",
-    phone: "",
+    phone: user?.phoneNumber || "",
     address: "",
     city: "",
     state: "",

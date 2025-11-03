@@ -2,16 +2,19 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Search, X, Menu, Heart, ShoppingCart, User } from "lucide-react"
+import { Search, X, Menu, Heart, ShoppingCart, User, LogOut } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/hooks/use-cart"
+import { useAuth } from "@/hooks/use-auth"
 
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [showUserMenu, setShowUserMenu] = useState(false)
   const router = useRouter()
   const { items } = useCart()
+  const { user, loading, setShowLoginModal, logout } = useAuth()
   const cartCount = items.length
 
   const handleSearch = () => {
@@ -20,6 +23,12 @@ export default function Navbar() {
       setIsSearchOpen(false)
       setSearchQuery("")
     }
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    setShowUserMenu(false)
+    router.push("/")
   }
 
   return (
@@ -42,14 +51,11 @@ export default function Navbar() {
               COLLECTION
             </Link>
             <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">
-            ABOUT US
-          </Link>
-          <Link href="/track" className="block text-sm font-semibold hover:text-gray-600 transition">
-            TRACK ORDER
-          </Link>
-          {/* <Link href="/login" className="block text-sm font-semibold hover:text-gray-600 transition">
-            ACCOUNT
-          </Link> */}
+              ABOUT US
+            </Link>
+            <Link href="/track" className="block text-sm font-semibold hover:text-gray-600 transition">
+              TRACK ORDER
+            </Link>
           </div>
         </div>
 
@@ -89,13 +95,71 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <Link
-            href="/login"
-            className="p-2 hover:bg-gray-100 rounded transition hidden md:flex items-center justify-center"
-            aria-label="Account"
-          >
-            <User size={18} className="md:w-5 md:h-5" />
-          </Link>
+          
+          {/* User Menu */}
+          {!loading && (
+            <div className="relative">
+              {user ? (
+                <>
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="p-2 hover:bg-gray-100 rounded transition hidden md:flex items-center justify-center"
+                    aria-label="Account"
+                  >
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName || "User"} className="w-6 h-6 rounded-full" />
+                    ) : (
+                      <User size={18} className="md:w-5 md:h-5" />
+                    )}
+                  </button>
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <p className="text-sm font-semibold text-gray-900">{user.displayName || "User"}</p>
+                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      </div>
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        My Profile
+                      </Link>
+                      <Link
+                        href="/orders"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        My Orders
+                      </Link>
+                      <Link
+                        href="/wishlist"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        Wishlist
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2"
+                      >
+                        <LogOut size={16} />
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="p-2 hover:bg-gray-100 rounded transition hidden md:flex items-center justify-center"
+                  aria-label="Login"
+                >
+                  <User size={18} className="md:w-5 md:h-5" />
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -126,15 +190,6 @@ export default function Navbar() {
           <Link href="/" className="block text-sm font-semibold hover:text-gray-600 transition">
             MEN
           </Link>
-          {/* <Link href="/shop" className="block text-sm font-semibold hover:text-gray-600 transition">
-            WOMEN
-          </Link> */}
-          {/* <Link href="/shop?category=kids" className="block text-sm font-semibold hover:text-gray-600 transition">
-            KIDS
-          </Link> */}
-          {/* <Link href="/shop?category=footwear" className="block text-sm font-semibold hover:text-gray-600 transition">
-            FOOTWEAR
-          </Link> */}
           <hr className="my-2" />
           <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">
             ABOUT US
@@ -142,9 +197,20 @@ export default function Navbar() {
           <Link href="/track" className="block text-sm font-semibold hover:text-gray-600 transition">
             TRACK ORDER
           </Link>
-          <Link href="/login" className="block text-sm font-semibold hover:text-gray-600 transition">
-            ACCOUNT
-          </Link>
+          {user ? (
+            <>
+              <Link href="/profile" className="block text-sm font-semibold hover:text-gray-600 transition">
+                MY PROFILE
+              </Link>
+              <button onClick={handleLogout} className="block w-full text-left text-sm font-semibold text-red-600 hover:text-red-700 transition">
+                LOGOUT
+              </button>
+            </>
+          ) : (
+            <button onClick={() => setShowLoginModal(true)} className="block w-full text-left text-sm font-semibold hover:text-gray-600 transition">
+              LOGIN / SIGN UP
+            </button>
+          )}
         </div>
       )}
     </nav>
