@@ -37,42 +37,42 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="group">
-      <div className="relative overflow-hidden bg-gray-200 rounded-lg mb-4 h-80">
+      <div className="relative overflow-hidden bg-gray-200 rounded-lg mb-3 md:mb-4 h-64 sm:h-72 md:h-80">
         <img
           src={product.image || "/placeholder.svg"}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
         />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center gap-4">
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center gap-3 md:gap-4">
           <button
             onClick={() =>
               toggleWishlist({ id: product.id, name: product.name, price: product.price, image: product.image })
             }
-            className={`p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75 ${
+            className={`p-2.5 md:p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75 ${
               inWishlist ? "bg-red-500 text-white" : "bg-white text-black"
             }`}
           >
-            <Heart size={20} className={inWishlist ? "fill-red-500" : ""} />
+            <Heart size={18} className={`md:w-5 md:h-5 ${inWishlist ? "fill-red-500" : ""}`} />
           </button>
           <button
             onClick={handleAddToCart}
-            className="bg-black text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75"
+            className="bg-black text-white p-2.5 md:p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75"
           >
-            <ShoppingCart size={20} />
+            <ShoppingCart size={18} className="md:w-5 md:h-5" />
           </button>
         </div>
       </div>
 
       <Link href={`/product/${product.id}`} className="hover:underline">
-        <h3 className="text-sm font-bold mb-1 line-clamp-2">{product.name}</h3>
+        <h3 className="text-sm md:text-base font-bold mb-1 line-clamp-2">{product.name}</h3>
       </Link>
 
-      <div className="mb-3">
+      <div className="mb-2 md:mb-3">
         <div className="flex items-baseline gap-2">
-          <p className="font-bold text-lg">₹{product.price.toLocaleString("en-IN")}</p>
+          <p className="font-bold text-base md:text-lg">₹{product.price.toLocaleString("en-IN")}</p>
           {product.mrp && (
             <>
-              <p className="text-sm text-gray-400 line-through">₹{product.mrp.toLocaleString("en-IN")}</p>
+              <p className="text-xs md:text-sm text-gray-400 line-through">₹{product.mrp.toLocaleString("en-IN")}</p>
               {product.discount && <p className="text-xs text-red-600 font-bold">{product.discount}%</p>}
             </>
           )}

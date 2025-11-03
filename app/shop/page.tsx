@@ -122,25 +122,25 @@ export default function ShopPage() {
       <Navbar />
       <main className="bg-white">
         {/* Page Header */}
-        <div className="border-b border-gray-200 px-6 py-8 max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Our Collection</h1>
-          <p className="text-gray-600">Discover our exclusive range of premium hoodies</p>
+        <div className="border-b border-gray-200 px-4 md:px-6 py-6 md:py-8 max-w-7xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">Our Collection</h1>
+          <p className="text-sm md:text-base text-gray-600">Discover our exclusive range of premium hoodies</p>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
             {/* Filters Sidebar */}
             <div className={`${showFilters ? "block" : "hidden"} lg:block lg:col-span-1`}>
-              <div className="space-y-6">
+              <div className="space-y-6 bg-white lg:bg-transparent p-4 lg:p-0 rounded-lg lg:rounded-none border lg:border-0 border-gray-200">
                 {/* Categories */}
                 <div className="border-b pb-6">
-                  <h3 className="font-bold mb-4">Category</h3>
+                  <h3 className="font-bold mb-4 text-sm md:text-base">Category</h3>
                   <div className="space-y-2">
                     {categories.map((cat) => (
                       <button
                         key={cat}
                         onClick={() => setSelectedCategory(cat)}
-                        className={`block w-full text-left px-3 py-2 rounded transition ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition ${
                           selectedCategory === cat
                             ? "bg-black text-white font-semibold"
                             : "hover:bg-gray-100 text-gray-700"
@@ -154,13 +154,13 @@ export default function ShopPage() {
 
                 {/* Price */}
                 <div className="border-b pb-6">
-                  <h3 className="font-bold mb-4">Price Range</h3>
+                  <h3 className="font-bold mb-4 text-sm md:text-base">Price Range</h3>
                   <div className="space-y-2">
                     {priceRanges.map((range) => (
                       <button
                         key={range.label}
                         onClick={() => setSelectedPrice({ min: range.min, max: range.max })}
-                        className={`block w-full text-left px-3 py-2 rounded transition ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition ${
                           selectedPrice.min === range.min && selectedPrice.max === range.max
                             ? "bg-black text-white font-semibold"
                             : "hover:bg-gray-100 text-gray-700"
@@ -177,48 +177,50 @@ export default function ShopPage() {
             {/* Products Grid */}
             <div className="lg:col-span-3">
               {/* Sort Bar */}
-              <div className="flex items-center justify-between mb-8 pb-6 border-b">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 pb-4 md:pb-6 border-b gap-3 sm:gap-4">
                 <div>
                   <p className="text-sm text-gray-600">
                     Showing <span className="font-semibold">{filteredProducts.length}</span> products
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <label className="text-sm text-gray-600">Sort by:</label>
-                  <div className="relative">
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="appearance-none px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black pr-8"
-                    >
-                      <option value="newest">Newest</option>
-                      <option value="price-low">Price: Low to High</option>
-                      <option value="price-high">Price: High to Low</option>
-                    </select>
-                    <ChevronDown
-                      size={16}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
-                    />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <label className="text-sm text-gray-600 whitespace-nowrap">Sort by:</label>
+                    <div className="relative flex-1 sm:flex-none">
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="appearance-none w-full sm:w-auto px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black pr-8"
+                      >
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                      </select>
+                      <ChevronDown
+                        size={16}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                      />
+                    </div>
                   </div>
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="lg:hidden w-full sm:w-auto px-4 py-2 text-sm border border-gray-300 rounded hover:bg-gray-100 font-medium"
+                  >
+                    {showFilters ? "Hide" : "Show"} Filters
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
-                >
-                  {showFilters ? "Hide" : "Show"} Filters
-                </button>
               </div>
 
               {/* Products */}
               {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                   {filteredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-gray-600 text-lg">No products found matching your filters.</p>
+                  <p className="text-gray-600 text-base md:text-lg">No products found matching your filters.</p>
                 </div>
               )}
             </div>

@@ -61,7 +61,7 @@ export default function Navbar() {
               alt="Rare Rabbit"
               className="w-10 h-10 md:w-12 md:h-12 object-contain"
             />
-            <span className="text-xs font-semibold tracking-widest hidden sm:inline ml-2">RARE RABBIT</span>
+            <span className="text-xs font-semibold tracking-widest hidden sm:inline ml-2">ROFERO</span>
           </Link>
         </div>
 

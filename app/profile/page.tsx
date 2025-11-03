@@ -67,51 +67,51 @@ export default function ProfilePage() {
   return (
     <>
       <Navbar />
-      <main className="bg-gray-50 min-h-screen py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <main className="bg-gray-50 min-h-screen py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {/* Sidebar */}
-            <div className="md:col-span-1">
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-black rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+            <div className="lg:col-span-1">
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <div className="text-center mb-4 md:mb-6">
+                  <div className="w-16 h-16 md:w-20 md:h-20 bg-black rounded-full mx-auto mb-3 md:mb-4 flex items-center justify-center text-white text-xl md:text-2xl font-bold">
                     {user.email ? user.email[0].toUpperCase() : "U"}
                   </div>
-                  <h2 className="text-xl font-bold">{profileData.fullName || user.email}</h2>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <h2 className="text-lg md:text-xl font-bold truncate">{profileData.fullName || user.email}</h2>
+                  <p className="text-xs md:text-sm text-gray-600 truncate">{user.email}</p>
                 </div>
 
                 <nav className="space-y-2">
-                  <Link href="/profile" className="block px-4 py-2 bg-black text-white rounded text-sm font-semibold">
+                  <Link href="/profile" className="block px-3 md:px-4 py-2 bg-black text-white rounded text-sm font-semibold">
                     My Profile
                   </Link>
                   <Link
                     href="/track"
-                    className="block px-4 py-2 border border-gray-300 rounded text-sm font-semibold hover:bg-gray-100"
+                    className="block px-3 md:px-4 py-2 border border-gray-300 rounded text-sm font-semibold hover:bg-gray-100"
                   >
                     Track Orders
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-2 border border-gray-300 rounded text-sm font-semibold hover:bg-gray-100 flex items-center justify-center gap-2"
+                    className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded text-sm font-semibold hover:bg-gray-100 flex items-center justify-center gap-2"
                   >
-                    <LogOut size={16} /> Logout
+                    <LogOut size={14} className="md:w-4 md:h-4" /> Logout
                   </button>
                 </nav>
               </div>
             </div>
 
             {/* Main Content */}
-            <div className="md:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-6">
               {/* Personal Information */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold">Personal Information</h2>
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4 md:mb-6">
+                  <h2 className="text-xl md:text-2xl font-bold">Personal Information</h2>
                   <button
                     onClick={() => setIsEditing(!isEditing)}
                     className="flex items-center gap-2 text-sm font-semibold text-black hover:underline"
                   >
-                    <Edit2 size={16} /> {isEditing ? "Cancel" : "Edit"}
+                    <Edit2 size={14} className="md:w-4 md:h-4" /> {isEditing ? "Cancel" : "Edit"}
                   </button>
                 </div>
 
@@ -125,20 +125,20 @@ export default function ProfilePage() {
                         value={profileData.fullName}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        className={`w-full px-4 py-2 border border-gray-300 rounded ${
+                        className={`w-full px-3 md:px-4 py-2 text-sm border border-gray-300 rounded ${
                           isEditing ? "focus:outline-none focus:ring-2 focus:ring-black" : "bg-gray-50"
                         }`}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
-                        <Mail size={16} /> Email Address
+                        <Mail size={14} className="md:w-4 md:h-4" /> Email Address
                       </label>
                       <input
                         type="email"
                         value={profileData.email}
                         disabled
-                        className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-50"
+                        className="w-full px-3 md:px-4 py-2 text-sm border border-gray-300 rounded bg-gray-50"
                       />
                     </div>
                   </div>
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
-                        <Phone size={16} /> Phone Number
+                        <Phone size={14} className="md:w-4 md:h-4" /> Phone Number
                       </label>
                       <input
                         type="tel"
@@ -155,7 +155,7 @@ export default function ProfilePage() {
                         onChange={handleInputChange}
                         disabled={!isEditing}
                         placeholder="+91"
-                        className={`w-full px-4 py-2 border border-gray-300 rounded ${
+                        className={`w-full px-3 md:px-4 py-2 text-sm border border-gray-300 rounded ${
                           isEditing ? "focus:outline-none focus:ring-2 focus:ring-black" : "bg-gray-50"
                         }`}
                       />
@@ -165,13 +165,13 @@ export default function ProfilePage() {
               </div>
 
               {/* Shipping Address */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h2 className="text-2xl font-bold mb-6">Shipping Address</h2>
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Shipping Address</h2>
 
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
-                      <MapPin size={16} /> Full Address
+                      <MapPin size={14} className="md:w-4 md:h-4" /> Full Address
                     </label>
                     <input
                       type="text"
@@ -180,7 +180,7 @@ export default function ProfilePage() {
                       onChange={handleInputChange}
                       disabled={!isEditing}
                       placeholder="Street address"
-                      className={`w-full px-4 py-2 border border-gray-300 rounded ${
+                      className={`w-full px-3 md:px-4 py-2 text-sm border border-gray-300 rounded ${
                         isEditing ? "focus:outline-none focus:ring-2 focus:ring-black" : "bg-gray-50"
                       }`}
                     />
@@ -195,7 +195,7 @@ export default function ProfilePage() {
                         value={profileData.city}
                         onChange={handleInputChange}
                         disabled={!isEditing}
-                        className={`w-full px-4 py-2 border border-gray-300 rounded ${
+                        className={`w-full px-3 md:px-4 py-2 text-sm border border-gray-300 rounded ${
                           isEditing ? "focus:outline-none focus:ring-2 focus:ring-black" : "bg-gray-50"
                         }`}
                       />

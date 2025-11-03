@@ -121,15 +121,15 @@ export default function CheckoutPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-3xl font-bold mb-12">Checkout</h1>
+      <main className="bg-gray-50 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <h1 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Checkout</h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {/* Order Summary */}
-            <div className="md:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6 md:space-y-8">
               {!user && (
-                <div className="bg-blue-50 border border-blue-200 rounded p-4">
+                <div className="bg-blue-50 border border-blue-200 rounded p-3 md:p-4">
                   <p className="text-sm text-blue-900">
                     Please{" "}
                     <Link href="/login" className="font-semibold hover:underline">
@@ -140,16 +140,16 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <h2 className="text-lg md:text-xl font-bold mb-4">Shipping Address</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                   <input
                     type="text"
                     name="name"
                     placeholder="Full Name *"
                     value={shippingAddress.name}
                     onChange={handleAddressChange}
-                    className="col-span-1 md:col-span-2 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="col-span-1 md:col-span-2 px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="email"
@@ -157,7 +157,7 @@ export default function CheckoutPage() {
                     placeholder="Email"
                     value={shippingAddress.email}
                     onChange={handleAddressChange}
-                    className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="tel"
@@ -165,7 +165,7 @@ export default function CheckoutPage() {
                     placeholder="Phone Number *"
                     value={shippingAddress.phone}
                     onChange={handleAddressChange}
-                    className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="text"
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
                     placeholder="Address *"
                     value={shippingAddress.address}
                     onChange={handleAddressChange}
-                    className="col-span-1 md:col-span-2 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="col-span-1 md:col-span-2 px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="text"
@@ -181,7 +181,7 @@ export default function CheckoutPage() {
                     placeholder="City"
                     value={shippingAddress.city}
                     onChange={handleAddressChange}
-                    className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="text"
@@ -189,7 +189,7 @@ export default function CheckoutPage() {
                     placeholder="State"
                     value={shippingAddress.state}
                     onChange={handleAddressChange}
-                    className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
                     type="text"
@@ -197,29 +197,30 @@ export default function CheckoutPage() {
                     placeholder="Pincode"
                     value={shippingAddress.pincode}
                     onChange={handleAddressChange}
-                    className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="px-3 md:px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
                   />
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h2 className="text-xl font-bold mb-4">Payment Method</h2>
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <h2 className="text-lg md:text-xl font-bold mb-4">Payment Method</h2>
                 <div className="space-y-3">
-                  <label className="flex items-center gap-3 p-3 border border-gray-300 rounded cursor-pointer hover:bg-gray-50">
+                  <label className="flex items-start gap-3 p-3 md:p-4 border border-gray-300 rounded cursor-pointer hover:bg-gray-50">
                     <input
                       type="radio"
                       name="payment"
                       value="cod"
                       checked={paymentMethod === "cod"}
                       onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="mt-0.5"
                     />
                     <div className="flex-1">
-                      <span className="font-semibold">Cash on Delivery (COD)</span>
-                      <p className="text-xs text-gray-600">Pay ₹{codAdvanceAmount} now (10%), rest at delivery</p>
+                      <span className="font-semibold text-sm md:text-base">Cash on Delivery (COD)</span>
+                      <p className="text-xs text-gray-600 mt-1">Pay ₹{codAdvanceAmount} now (10%), rest at delivery</p>
                     </div>
                   </label>
 
-                  <label className="flex items-center gap-3 p-3 border border-gray-300 rounded cursor-pointer hover:bg-gray-50">
+                  <label className="flex items-start gap-3 p-3 md:p-4 border border-gray-300 rounded cursor-pointer hover:bg-gray-50">
                     <input
                       type="radio"
                       name="payment"
@@ -227,87 +228,88 @@ export default function CheckoutPage() {
                       checked={paymentMethod === "online"}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                       disabled={total < minOnlineAmount}
+                      className="mt-0.5"
                     />
                     <div className="flex-1">
-                      <span className="font-semibold">Online Payment & EMI</span>
+                      <span className="font-semibold text-sm md:text-base">Online Payment & EMI</span>
                       {total < minOnlineAmount && (
-                        <p className="text-xs text-gray-600">Minimum ₹{minOnlineAmount} required</p>
+                        <p className="text-xs text-gray-600 mt-1">Minimum ₹{minOnlineAmount} required</p>
                       )}
                       {paymentMethod === "online" && total >= minOnlineAmount && (
-                        <p className="text-xs text-teal-600 font-medium">0% EMI available on select plans</p>
+                        <p className="text-xs text-teal-600 font-medium mt-1">0% EMI available on select plans</p>
                       )}
                     </div>
                   </label>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h2 className="text-xl font-bold mb-4">Order Items</h2>
-                <div className="space-y-4">
+              <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200">
+                <h2 className="text-lg md:text-xl font-bold mb-4">Order Items</h2>
+                <div className="space-y-3 md:space-y-4">
                   {items.map((item) => (
-                    <div key={item.id} className="flex gap-4 pb-4 border-b">
+                    <div key={item.id} className="flex gap-3 md:gap-4 pb-3 md:pb-4 border-b last:border-b-0">
                       <img
                         src={item.image || "/placeholder.svg"}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded"
+                        className="w-14 h-14 md:w-16 md:h-16 object-cover rounded flex-shrink-0"
                       />
-                      <div className="flex-1">
-                        <p className="font-semibold">{item.name}</p>
-                        <p className="text-sm text-gray-600">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm md:text-base truncate">{item.name}</p>
+                        <p className="text-xs md:text-sm text-gray-600">
                           {item.quantity} x ₹{item.price}
                         </p>
                       </div>
-                      <p className="font-semibold">₹{item.price * item.quantity}</p>
+                      <p className="font-semibold text-sm md:text-base flex-shrink-0">₹{item.price * item.quantity}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 border border-gray-200 h-fit">
-              <h2 className="text-xl font-bold mb-6">Order Summary</h2>
+            <div className="bg-white rounded-lg p-4 md:p-6 border border-gray-200 h-fit lg:sticky lg:top-24">
+              <h2 className="text-lg md:text-xl font-bold mb-4 md:mb-6">Order Summary</h2>
 
               {paymentStatus === "success" && (
-                <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded flex items-start gap-2">
-                  <CheckCircle size={20} className="text-green-600 mt-0.5" />
-                  <p className="text-sm text-green-700">Payment processed successfully!</p>
+                <div className="mb-4 md:mb-6 p-3 bg-green-50 border border-green-200 rounded flex items-start gap-2">
+                  <CheckCircle size={18} className="text-green-600 mt-0.5 flex-shrink-0 md:w-5 md:h-5" />
+                  <p className="text-xs md:text-sm text-green-700">Payment processed successfully!</p>
                 </div>
               )}
 
               {paymentStatus === "failed" && (
-                <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded flex items-start gap-2">
-                  <AlertCircle size={20} className="text-red-600 mt-0.5" />
-                  <p className="text-sm text-red-700">{error}</p>
+                <div className="mb-4 md:mb-6 p-3 bg-red-50 border border-red-200 rounded flex items-start gap-2">
+                  <AlertCircle size={18} className="text-red-600 mt-0.5 flex-shrink-0 md:w-5 md:h-5" />
+                  <p className="text-xs md:text-sm text-red-700">{error}</p>
                 </div>
               )}
 
-              <div className="space-y-3 mb-6 pb-6 border-b">
-                <div className="flex justify-between">
+              <div className="space-y-2 md:space-y-3 mb-4 md:mb-6 pb-4 md:pb-6 border-b">
+                <div className="flex justify-between text-sm md:text-base">
                   <span className="text-gray-600">Subtotal</span>
                   <span>₹{total.toLocaleString("en-IN")}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between text-sm md:text-base">
                   <span className="text-gray-600">Shipping</span>
                   <span className="text-green-600">Free</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between text-sm md:text-base">
                   <span className="text-gray-600">Tax (18%)</span>
                   <span>₹{Math.round(total * 0.18).toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
-              <div className="flex justify-between text-lg font-bold mb-6">
+              <div className="flex justify-between text-base md:text-lg font-bold mb-4 md:mb-6">
                 <span>Total</span>
                 <span>₹{totalWithTax.toLocaleString("en-IN")}</span>
               </div>
 
-              <div className="mb-6 p-4 bg-gray-50 rounded">
-                <p className="text-sm font-semibold text-gray-700 mb-2">Payment Method</p>
-                <p className="text-sm capitalize font-medium">
+              <div className="mb-4 md:mb-6 p-3 md:p-4 bg-gray-50 rounded">
+                <p className="text-xs md:text-sm font-semibold text-gray-700 mb-2">Payment Method</p>
+                <p className="text-xs md:text-sm capitalize font-medium">
                   {paymentMethod === "cod" ? "Cash on Delivery" : "Online Payment & EMI"}
                 </p>
                 {paymentMethod === "cod" && (
-                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded text-xs">
+                  <div className="mt-3 p-2 md:p-3 bg-blue-50 border border-blue-200 rounded text-xs">
                     <p className="font-semibold text-blue-900">Payment Breakdown:</p>
                     <p className="text-blue-800 mt-1">Now: ₹{codAdvanceAmount.toLocaleString("en-IN")} (10%)</p>
                     <p className="text-blue-800">
@@ -320,7 +322,7 @@ export default function CheckoutPage() {
               <button
                 onClick={handlePlaceOrder}
                 disabled={!user || orderPlaced || loading || paymentStatus === "processing"}
-                className={`w-full py-3 rounded font-semibold transition ${
+                className={`w-full py-2.5 md:py-3 text-sm md:text-base rounded font-semibold transition ${
                   user && !orderPlaced && !(loading || paymentStatus === "processing")
                     ? "bg-black text-white hover:bg-gray-900"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -337,7 +339,7 @@ export default function CheckoutPage() {
                   `Pay ₹${(paymentMethod === "cod" ? codAdvanceAmount : totalWithTax).toLocaleString("en-IN")}`
                 )}
               </button>
-              {!user && <p className="text-sm text-gray-600 text-center mt-3">Login required to proceed</p>}
+              {!user && <p className="text-xs md:text-sm text-gray-600 text-center mt-3">Login required to proceed</p>}
             </div>
           </div>
         </div>
