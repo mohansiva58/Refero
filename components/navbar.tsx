@@ -39,62 +39,29 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 lg:gap-8">
             <Link href="/" className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition">
-              MEN
+              COLLECTION
             </Link>
-            <Link
-              href="/shop"
-              className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition"
-            >
-              WOMEN
-            </Link>
-            <Link
-              href="/shop?category=kids"
-              className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition"
-            >
-              KIDS
-            </Link>
-            <Link
-              href="/shop?category=footwear"
-              className="text-xs lg:text-sm font-semibold tracking-wider hover:text-gray-600 transition"
-            >
-              FOOTWEAR
-            </Link>
+            <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">
+            ABOUT US
+          </Link>
+          <Link href="/track" className="block text-sm font-semibold hover:text-gray-600 transition">
+            TRACK ORDER
+          </Link>
+          {/* <Link href="/login" className="block text-sm font-semibold hover:text-gray-600 transition">
+            ACCOUNT
+          </Link> */}
           </div>
         </div>
 
         {/* Center - Logo */}
         <div className="flex-1 flex justify-center md:flex-none md:static md:flex-1">
-          <Link href="/" className="flex flex-col items-center gap-1" aria-label="Home">
-            <svg
-              className="w-10 h-10 md:w-12 md:h-12"
-              viewBox="0 0 200 240"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Rabbit Head */}
-              <path d="M100 80L85 50L95 40L100 30L105 40L115 50L100 80Z" stroke="black" strokeWidth="2" fill="none" />
-
-              {/* Ears */}
-              <path d="M75 60L65 20L55 30L60 70Z" stroke="black" strokeWidth="2" fill="none" />
-              <path d="M125 60L135 20L145 30L140 70Z" stroke="black" strokeWidth="2" fill="none" />
-
-              {/* Crown */}
-              <path d="M80 35L90 15L100 20L110 15L120 35" stroke="black" strokeWidth="2" fill="none" />
-
-              {/* Face */}
-              <circle cx="85" cy="95" r="3" fill="black" />
-              <circle cx="115" cy="95" r="3" fill="black" />
-
-              {/* Nose */}
-              <circle cx="100" cy="110" r="2" fill="black" />
-
-              {/* Mouth */}
-              <path d="M100 110L95 120L100 122L105 120Z" stroke="black" strokeWidth="1.5" fill="none" />
-
-              {/* Chin */}
-              <path d="M85 125L100 140L115 125" stroke="black" strokeWidth="2" fill="none" />
-            </svg>
-            <span className="text-xs font-semibold tracking-widest hidden sm:inline">RARE RABBIT</span>
+          <Link href="/" className="flex items-center" aria-label="Home">
+            <img
+              src="https://images.yourstory.com/cs/images/companies/shoprarerabbitlogo-1719813730851.jpg?fm=auto&ar=1%3A1&mode=fill&fill=solid&fill-color=fff&format=auto&w=1920&q=75"
+              alt="Rare Rabbit"
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
+            <span className="text-xs font-semibold tracking-widest hidden sm:inline ml-2">RARE RABBIT</span>
           </Link>
         </div>
 
@@ -159,15 +126,15 @@ export default function Navbar() {
           <Link href="/" className="block text-sm font-semibold hover:text-gray-600 transition">
             MEN
           </Link>
-          <Link href="/shop" className="block text-sm font-semibold hover:text-gray-600 transition">
+          {/* <Link href="/shop" className="block text-sm font-semibold hover:text-gray-600 transition">
             WOMEN
-          </Link>
-          <Link href="/shop?category=kids" className="block text-sm font-semibold hover:text-gray-600 transition">
+          </Link> */}
+          {/* <Link href="/shop?category=kids" className="block text-sm font-semibold hover:text-gray-600 transition">
             KIDS
-          </Link>
-          <Link href="/shop?category=footwear" className="block text-sm font-semibold hover:text-gray-600 transition">
+          </Link> */}
+          {/* <Link href="/shop?category=footwear" className="block text-sm font-semibold hover:text-gray-600 transition">
             FOOTWEAR
-          </Link>
+          </Link> */}
           <hr className="my-2" />
           <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">
             ABOUT US
