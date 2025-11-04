@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Search, X, Menu, Heart, ShoppingCart, User, LogOut } from "lucide-react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { useCart } from "@/hooks/use-cart"
 import { useAuth } from "@/hooks/use-auth"
 
-export default function Navbar() {
+function NavbarContent() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -392,5 +392,32 @@ export default function Navbar() {
         </>
       )}
     </nav>
+  )
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={
+      <nav className="w-full bg-white sticky top-0 z-50 border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 py-2 md:py-3 max-w-7xl mx-auto w-full">
+          <div className="flex items-center gap-4 md:gap-8">
+            <div className="w-8 h-8" />
+          </div>
+          <Link href="/" className="flex items-center" aria-label="Home">
+            <img
+              src="https://images.yourstory.com/cs/images/companies/shoprarerabbitlogo-1719813730851.jpg?fm=auto&ar=1%3A1&mode=fill&fill=solid&fill-color=fff&format=auto&w=1920&q=75"
+              alt="Refero"
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
+            <span className="text-xs font-semibold tracking-widest hidden sm:inline ml-2">ROFERO</span>
+          </Link>
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="w-8 h-8" />
+          </div>
+        </div>
+      </nav>
+    }>
+      <NavbarContent />
+    </Suspense>
   )
 }
