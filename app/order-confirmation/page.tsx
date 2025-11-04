@@ -126,7 +126,7 @@ export default function OrderConfirmationPage() {
 
           <div className="space-y-3">
             <Link
-              href="/track"
+              href="/my-orders"
               className="block w-full bg-black text-white py-3 rounded font-semibold hover:bg-gray-900 transition"
             >
               Track My Order

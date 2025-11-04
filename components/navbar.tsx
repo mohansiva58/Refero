@@ -185,14 +185,14 @@ export default function Navbar() {
 
       {isMobileOpen && (
         <div className="md:hidden border-t border-gray-200 px-4 py-4 space-y-3 bg-white">
-          <Link href="/" className="block text-sm font-semibold hover:text-gray-600 transition">
-            MEN
+          <Link href="/shop" className="block text-sm font-semibold hover:text-gray-600 transition">
+            COLLECTION
           </Link>
           <hr className="my-2" />
           <Link href="/about" className="block text-sm font-semibold hover:text-gray-600 transition">
             ABOUT US
           </Link>
-          <Link href="/track" className="block text-sm font-semibold hover:text-gray-600 transition">
+          <Link href="/my-orders" className="block text-sm font-semibold hover:text-gray-600 transition">
             TRACK ORDER
           </Link>
           {user ? (
