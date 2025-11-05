@@ -49,13 +49,37 @@ export default function TrackPage() {
   const [showResults, setShowResults] = useState(false)
   const { user } = useAuth()
 
-  // Auto-populate if user is logged in
+  // Auto-populate and fetch orders if user is logged in
   useEffect(() => {
     if (user?.email) {
       setSearchValue(user.email)
       setSearchType("email")
+      // Automatically fetch orders for logged-in user
+      fetchOrdersForUser(user.email)
     }
   }, [user])
+
+  const fetchOrdersForUser = async (email: string) => {
+    setIsLoading(true)
+    setError("")
+    
+    try {
+      const response = await fetch(`/api/orders?userEmail=${encodeURIComponent(email)}`)
+      const result = await response.json()
+
+      if (result.success && result.data && result.data.length > 0) {
+        setOrders(result.data)
+        setShowResults(true)
+      } else {
+        setError("No orders found for your account.")
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error)
+      setError("Failed to fetch orders. Please try again later.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSearch = async () => {
     setError("")
@@ -165,14 +189,21 @@ export default function TrackPage() {
       <Navbar />
       <main className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-6xl mx-auto px-4">
-          {/* Header */}
+          {/* Header
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">Track Your Orders</h1>
             <p className="text-gray-600">Enter your email or phone number to view all your orders</p>
-          </div>
+          </div> */}
 
           {/* Search Card */}
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+          {/* <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Search for Orders</h2>
+              {user && (
+                <span className="text-sm text-gray-600">Logged in as: {user.email}</span>
+              )}
+            </div>
+            
             <div className="flex gap-4 mb-4">
               <button
                 onClick={() => setSearchType("email")}
@@ -233,12 +264,30 @@ export default function TrackPage() {
                 <p className="text-red-600 text-sm">{error}</p>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Orders List */}
+          {/* {isLoading && !showResults && (
+            <div className="text-center py-12">
+              <RefreshCw className="animate-spin mx-auto mb-4 text-gray-400" size={40} />
+              <p className="text-gray-600">Loading your orders...</p>
+            </div>
+          )} */}
+
           {showResults && orders.length > 0 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold">Your Orders ({orders.length})</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">Your Orders ({orders.length})</h2>
+                {user && (
+                  <button
+                    onClick={() => fetchOrdersForUser(user.email!)}
+                    className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+                  >
+                    <RefreshCw size={14} />
+                    Refresh
+                  </button>
+                )}
+              </div>
               
               {orders.map((order) => (
                 <div key={order._id} className="bg-white rounded-lg shadow-sm border overflow-hidden">

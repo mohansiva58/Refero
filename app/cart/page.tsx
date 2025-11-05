@@ -161,7 +161,7 @@ export default function CartPage() {
                   </div>
                   {shipping > 0 && <p className="text-xs text-gray-500">Free shipping on orders above ₹5,000</p>}
                   <div className="flex justify-between text-gray-600">
-                    <span>Tax (18% GST)</span>
+                    <span>Tax (8% GST)</span>
                     <span>₹{tax.toLocaleString("en-IN")}</span>
                   </div>
                 </div>

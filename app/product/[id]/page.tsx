@@ -102,7 +102,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     )
   }
 
+  const isOutOfStock = product.stockQuantity === 0 || product.inStock === false
+
   const handleAddToCart = () => {
+    if (isOutOfStock) {
+      alert("This product is currently out of stock")
+      return
+    }
     if (!selectedSize) {
       alert("Please select a size")
       return
@@ -119,6 +125,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   }
 
   const handleBuyNow = () => {
+    if (isOutOfStock) {
+      alert("This product is currently out of stock")
+      return
+    }
     if (!selectedSize) {
       alert("Please select a size")
       return
@@ -283,9 +293,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       )}
 
       <main className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-2 md:py-4">
           {/* Breadcrumb */}
-          <div className="text-xs md:text-sm text-gray-600 mb-6 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+          <div className="text-xs md:text-sm text-gray-600 mb-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
             <Link href="/" className="hover:underline hover:text-black">
               Home
             </Link>
@@ -297,12 +307,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <span className="text-gray-900 font-medium truncate">{product.subtitle}</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
             {/* Image Gallery */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               {/* Main Image */}
               <div 
                 className="relative bg-gray-100 rounded-lg overflow-hidden aspect-square md:aspect-[4/5] cursor-zoom-in"
+                style={{ maxHeight: '450px' }}
                 onClick={() => openImageModal(mainImage)}
               >
                 <img
@@ -335,7 +346,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </div>
 
               {/* Thumbnail Images */}
-              <div className="grid grid-cols-4 gap-2 md:gap-3">
+              <div className="grid grid-cols-4 gap-1.5 md:gap-2">
                 {product.images.map((image, index) => (
                   <button
                     key={index}
@@ -343,6 +354,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     className={`aspect-square rounded-lg overflow-hidden border-2 transition ${
                       index === mainImage ? "border-black" : "border-gray-200 hover:border-gray-400"
                     }`}
+                    style={{ maxHeight: '95px' }}
                   >
                     <img
                       src={image || "/placeholder.svg"}
@@ -355,7 +367,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </div>
 
             {/* Product Details */}
-            <div className="space-y-6">
+            <div className="space-y-4">
+
+            
+              
               {/* Product Title */}
               <div>
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight mb-1">{product.name}</h1>
@@ -363,7 +378,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </div>
 
               {/* Price Section */}
-              <div className="pb-6 border-b border-gray-200">
+              <div className="pb-4 border-b border-gray-200">
                 <div className="flex items-center gap-3 mb-2">
                   <p className="text-xs md:text-sm text-gray-600">MRP</p>
                   <p className="text-base md:text-lg text-gray-400 line-through">₹{product.mrp.toLocaleString("en-IN")}</p>
@@ -375,7 +390,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
               {/* Size Selection */}
               <div>
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <label className="text-sm md:text-base font-bold uppercase">Select Size</label>
                   <button 
                     onClick={() => setShowSizeChart(true)}
@@ -401,45 +416,35 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               </div>
 
-              {/* Quantity Selector */}
-              <div>
-                <label className="text-sm md:text-base font-bold mb-3 block">QUANTITY</label>
-                <div className="flex items-center gap-4 bg-gray-100 p-3 rounded-lg w-fit">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-lg font-bold hover:text-gray-600 transition"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus size={18} />
-                  </button>
-                  <span className="px-4 text-lg font-semibold min-w-[40px] text-center">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="text-lg font-bold hover:text-gray-600 transition"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus size={18} />
-                  </button>
+              {/* Quantity Selector - show only when in stock */}
+              {!isOutOfStock ? (
+                <div>
+                  <label className="text-sm md:text-base font-bold mb-2 block">QUANTITY</label>
+                  <div className="flex items-center gap-4 bg-gray-100 p-2 rounded-lg w-fit">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="text-lg font-bold hover:text-gray-600 transition"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={18} />
+                    </button>
+                    <span className="px-4 text-lg font-semibold min-w-[40px] text-center">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="text-lg font-bold hover:text-gray-600 transition"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={18} />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
-              {/* EMI Section */}
-              <div className="p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border border-teal-200">
-                <div className="flex items-baseline gap-2 mb-1">
-                  <p className="text-xs md:text-sm font-bold text-gray-900">PAY NOW</p>
-                  <span className="text-base md:text-lg font-bold text-green-600">₹{Math.round(product.price * 0.1)}</span>
-                  <span className="text-xs text-gray-600">REST PAY LATER</span>
-                  <span className="text-[10px] md:text-xs bg-teal-600 text-white px-2 py-0.5 rounded font-bold">NEW</span>
-                </div>
-                <p className="text-[10px] md:text-xs text-gray-700">
-                  AT 0% EMI ON <span className="font-bold">UPI</span> |{" "}
-                  <button className="text-blue-600 underline hover:no-underline font-medium">CHECK EMI NOW</button>
-                </p>
-              </div>
+                  
 
               {/* Pincode Check */}
-              <div className="pb-6 border-b border-gray-200">
-                <p className="text-xs md:text-sm font-bold mb-3 uppercase">Check Estimated Delivery</p>
+              <div className="pb-4 border-b border-gray-200">
+                <p className="text-xs md:text-sm font-bold mb-2 uppercase">Check Estimated Delivery</p>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -466,23 +471,33 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleAddToCart}
-                  className="py-3 md:py-4 px-4 border-2 border-black text-black font-bold rounded hover:bg-gray-100 transition text-sm md:text-base"
+                  disabled={isOutOfStock}
+                  className={`py-2.5 md:py-3 px-3 border-2 font-bold rounded transition text-sm md:text-base ${
+                    isOutOfStock
+                      ? "border-gray-300 bg-gray-200 text-gray-500 cursor-not-allowed"
+                      : "border-black text-black hover:bg-gray-100"
+                  }`}
                 >
-                  ADD TO CART
+                  {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="py-3 md:py-4 px-4 bg-black text-white font-bold rounded hover:bg-gray-800 transition text-sm md:text-base"
+                  disabled={isOutOfStock}
+                  className={`py-2.5 md:py-3 px-3 font-bold rounded transition text-sm md:text-base ${
+                    isOutOfStock
+                      ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                      : "bg-black text-white hover:bg-gray-800"
+                  }`}
                 >
-                  BUY IT NOW
+                  {isOutOfStock ? "UNAVAILABLE" : "BUY IT NOW"}
                 </button>
               </div>
 
               {/* Features */}
-              <div className="space-y-3 pt-4">
+              <div className="space-y-2 pt-3">
                 <div className="flex gap-3 items-start">
                   <Truck size={20} className="text-gray-600 flex-shrink-0 mt-0.5" />
                   <div className="text-sm">
@@ -502,10 +517,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           </div>
 
           {/* Product Description Section */}
-          <div className="mt-12 md:mt-16 space-y-8">
+          <div className="mt-8 md:mt-10 space-y-6">
             {/* Description */}
-            <div className="border-t border-gray-200 pt-8 md:pt-12">
-              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 uppercase">Description</h2>
+            <div className="border-t border-gray-200 pt-6 md:pt-8">
+              <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase">Description</h2>
               <div className="prose prose-sm md:prose-base max-w-none">
                 <p className="text-gray-700 leading-relaxed mb-4">{product.description}</p>
                 <p className="text-gray-700 leading-relaxed">{product.longDescription}</p>
@@ -514,9 +529,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
             {/* Product Features */}
             {product.features && product.features.length > 0 && (
-              <div className="border-t border-gray-200 pt-8 md:pt-12">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 uppercase">Product Features</h2>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="border-t border-gray-200 pt-6 md:pt-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase">Product Features</h2>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {product.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="text-green-600 font-bold text-lg">✓</span>
@@ -529,8 +544,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
             {/* Fabric Care */}
             {product.fabricCare && product.fabricCare.length > 0 && (
-              <div className="border-t border-gray-200 pt-8 md:pt-12">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 uppercase">Fabric Care</h2>
+              <div className="border-t border-gray-200 pt-6 md:pt-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase">Fabric Care</h2>
                 <ul className="space-y-2">
                   {product.fabricCare.map((care, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -544,9 +559,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
             {/* Reviews Section */}
             {product.rating && product.reviews && (
-              <div className="border-t border-gray-200 pt-8 md:pt-12">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 uppercase">Ratings & Reviews</h2>
-                <div className="flex items-center gap-4 mb-4">
+              <div className="border-t border-gray-200 pt-6 md:pt-8">
+                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase">Ratings & Reviews</h2>
+                <div className="flex items-center gap-4 mb-3">
                   <div className="flex items-center gap-1">
                     {Array(5)
                       .fill(0)

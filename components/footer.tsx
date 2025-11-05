@@ -19,29 +19,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-white border-t border-gray-200">
-      {/* Newsletter Section */}
-      <section className="px-4 md:px-6 py-12 md:py-16 max-w-7xl mx-auto border-b border-gray-200">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-          <div className="text-center md:text-left">
-            <h3 className="text-xl md:text-2xl font-bold mb-2">Let's Connect</h3>
-            <p className="text-sm md:text-base text-gray-600">Subscribe to our newsletter for exclusive offers</p>
-          </div>
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row w-full md:w-auto gap-2 md:gap-2">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1 min-w-0 sm:min-w-[250px] px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <button type="submit" className="bg-black text-white px-6 py-3 text-sm rounded hover:bg-gray-900 transition whitespace-nowrap">
-              Subscribe
-            </button>
-          </form>
-          {subscribed && <p className="text-green-600 text-sm w-full md:w-auto text-center">Thanks for subscribing!</p>}
-        </div>
-      </section>
+      
 
       {/* Footer Content */}
       <div className="px-4 md:px-6 py-8 md:py-12 max-w-7xl mx-auto">

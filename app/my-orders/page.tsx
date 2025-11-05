@@ -71,8 +71,7 @@ export default function MyOrdersPage() {
         return <Truck className="text-blue-600" size={20} />
       case "packaged":
         return <Box className="text-purple-600" size={20} />
-      case "confirmed":
-        return <Package className="text-indigo-600" size={20} />
+     
       case "cancelled":
         return <XCircle className="text-red-600" size={20} />
       default:
@@ -88,8 +87,7 @@ export default function MyOrdersPage() {
         return "bg-blue-100 text-blue-700 border-blue-200"
       case "packaged":
         return "bg-purple-100 text-purple-700 border-purple-200"
-      case "confirmed":
-        return "bg-indigo-100 text-indigo-700 border-indigo-200"
+   
       case "cancelled":
         return "bg-red-100 text-red-700 border-red-200"
       default:
@@ -100,7 +98,6 @@ export default function MyOrdersPage() {
   const getTrackingSteps = (status: string) => {
     const steps = [
       { label: "Order Placed", status: "pending", active: true },
-      { label: "Confirmed", status: "confirmed", active: false },
       { label: "Packaged", status: "packaged", active: false },
       { label: "Shipped", status: "shipped", active: false },
       { label: "Delivered", status: "delivered", active: false },

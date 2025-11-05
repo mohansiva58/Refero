@@ -17,6 +17,7 @@ interface Product {
   sizes: string[]
   category: string
   inStock: boolean
+  stockQuantity: number
   discount: number
 }
 
@@ -412,6 +413,8 @@ function ShopPageContent() {
                         discount: product.discount,
                         image: product.images[0] || "/placeholder.jpg",
                         colors: product.colors,
+                        stockQuantity: product.stockQuantity,
+                        inStock: product.inStock,
                       }} 
                      /> 
                   ))}

@@ -11,6 +11,8 @@ interface Product {
   discount: number
   images: string[]
   colors: string[]
+  stockQuantity: number
+  inStock: boolean
 }
 
 export default function NewArrivals() {
@@ -72,6 +74,8 @@ export default function NewArrivals() {
               discount: product.discount,
               image: product.images[0] || "/placeholder.jpg",
               colors: product.colors || [],
+              stockQuantity: product.stockQuantity,
+              inStock: product.inStock,
             }}
           />
         ))}

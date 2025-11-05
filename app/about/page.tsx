@@ -8,22 +8,33 @@ export default function AboutPage() {
       <Navbar />
       <main className="bg-white">
         {/* Hero Section */}
-        <section className="py-12 md:py-20 px-4 md:px-8 bg-gray-50">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About ROFERO</h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              We believe in creating premium, sustainable hoodies that empower individuals to express their unique
-              style. Every piece is crafted with precision, passion, and purpose.
-            </p>
-            <p>
-              About - ROFERO stands for those who keep fighting when no one’s watching.
-It’s born from the word “Rise” — because every time life breaks you, you come back harder.
-Every thread in ROFERO is a symbol of strength.
-Every drop is a chapter of survival.
-ROFERO — for those who rise, roar, and never retreat.
-            </p>
+                <section className="py-20 md:py-32 px-4 md:px-8 bg-white">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-block px-5 py-2 bg-gray-100 text-gray-900 text-xs font-bold tracking-wider rounded-full mb-8 uppercase">
+              Our Journey
+            </div>
+            <h1 className="text-6xl md:text-7xl font-black mb-10 tracking-tight text-gray-900">
+              About <span className="text-gray-900">ROFERO</span>
+            </h1>
+            <div className="space-y-8 text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              <p className="font-normal">
+                We believe in creating premium, sustainable hoodies that empower individuals to express their unique
+                style. Every piece is crafted with precision, passion, and purpose.
+              </p>
+              <div className="border-l-4 border-gray-900 pl-8 py-4 bg-gray-50 rounded-r-xl my-8">
+                <p className="italic font-medium text-gray-900 text-xl">
+                  ROFERO stands for those who keep fighting when no one's watching. Born from the word "Rise" — 
+                  because every time life breaks you, you come back harder.
+                </p>
+              </div>
+              <p className="font-normal">
+                Every thread in ROFERO is a symbol of strength. Every drop is a chapter of survival. 
+                ROFERO — for those who rise, roar, and never retreat.
+              </p>
+            </div>
           </div>
         </section>
+
 
         {/* Story Section */}
         <section className="py-12 md:py-20 px-4 md:px-8">

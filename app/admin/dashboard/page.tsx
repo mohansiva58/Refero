@@ -204,7 +204,6 @@ export default function AdminDashboard() {
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       pending: "bg-yellow-100 text-yellow-800",
-      confirmed: "bg-blue-100 text-blue-800",
       processing: "bg-purple-100 text-purple-800",
       shipped: "bg-indigo-100 text-indigo-800",
       delivered: "bg-green-100 text-green-800",
@@ -535,13 +534,16 @@ export default function AdminDashboard() {
                                   order.orderStatus === "delivered"
                                     ? "border-green-200 bg-green-50 text-green-700"
                                     : order.orderStatus === "shipped"
-                                      ? "border-indigo-200 bg-indigo-50 text-indigo-700"
-                                      : order.orderStatus === "cancelled"
-                                        ? "border-red-200 bg-red-50 text-red-700"
-                                        : "border-yellow-200 bg-yellow-50 text-yellow-700"
+                                      ? "border-blue-200 bg-blue-50 text-blue-700"
+                                      : order.orderStatus === "packaged"
+                                        ? "border-indigo-200 bg-indigo-50 text-indigo-700"
+                                        : order.orderStatus === "cancelled"
+                                          ? "border-red-200 bg-red-50 text-red-700"
+                                          : "border-yellow-200 bg-yellow-50 text-yellow-700"
                                 }`}
                               >
                                 <option value="pending">Pending</option>
+                                <option value="packaged">Packaged</option>
                                 <option value="shipped">Shipped</option>
                                 <option value="delivered">Delivered</option>
                                 <option value="cancelled">Cancelled</option>

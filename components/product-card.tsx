@@ -15,6 +15,8 @@ interface ProductCardProps {
     discount?: number
     image: string
     colors: string[]
+    stockQuantity?: number
+    inStock?: boolean
   }
 }
 
@@ -24,8 +26,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { isInWishlist, toggleWishlist } = useWishlist()
   const productId = typeof product.id === 'string' ? parseInt(product.id, 10) || 0 : product.id
   const inWishlist = isInWishlist(productId)
+  const isOutOfStock = product.stockQuantity === 0 || product.inStock === false
 
   const handleAddToCart = () => {
+    if (isOutOfStock) return
     addItem({
       id: productId,
       name: product.name,
@@ -48,6 +52,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
           />
+          {isOutOfStock && (
+            <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-lg z-10">
+              OUT OF STOCK
+            </div>
+          )}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center gap-3 md:gap-4">
             <button
               onClick={(e) => {
@@ -67,7 +76,12 @@ export default function ProductCard({ product }: ProductCardProps) {
                 e.stopPropagation()
                 handleAddToCart()
               }}
-              className="bg-black text-white p-2.5 md:p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75"
+              disabled={isOutOfStock}
+              className={`p-2.5 md:p-3 rounded-full opacity-0 group-hover:opacity-100 transition transform group-hover:scale-100 scale-75 ${
+                isOutOfStock 
+                  ? "bg-gray-400 text-gray-600 cursor-not-allowed" 
+                  : "bg-black text-white"
+              }`}
             >
               <ShoppingCart size={18} className="md:w-5 md:h-5" />
             </button>

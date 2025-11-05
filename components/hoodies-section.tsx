@@ -13,6 +13,8 @@ interface Product {
   images: string[]
   colors: string[]
   category: string
+  stockQuantity: number
+  inStock: boolean
 }
 
 export default function HoodiesSection() {
@@ -85,6 +87,8 @@ export default function HoodiesSection() {
               discount: hoodie.discount,
               image: hoodie.images[0] || "/placeholder.jpg",
               colors: hoodie.colors || [],
+              stockQuantity: hoodie.stockQuantity,
+              inStock: hoodie.inStock,
             }}
           />
         ))}
